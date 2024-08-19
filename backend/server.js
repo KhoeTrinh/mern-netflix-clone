@@ -1,11 +1,27 @@
+// express app
 import express from 'express';
 
-const app = express()
+const app = express();
 
-import authRoutes from './routes/authRoutes.js'
+// .env variables
+import { ENV_VARS } from './configs/envVars.js';
 
-app.use("/api/v1/auth", authRoutes)
+const port = ENV_VARS.PORT;
 
-app.listen(5000, () => {
-    console.log('Server running on port 5000')
-})
+// connect DB
+import connectDB from './configs/db.js';
+
+connectDB();
+
+// middleware
+app.use(express.json())
+
+// routes
+import authRoutes from './routes/authRoutes.js';
+
+app.use('/api/v1/auth', authRoutes);
+
+// app running on port
+app.listen(port, () => {
+    console.log(`Server running on port ${port} 👌`);
+});
