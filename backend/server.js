@@ -24,10 +24,12 @@ app.use(cookieParser());
 import authRoutes from './routes/authRoutes.js';
 import movieRoutes from './routes/movieRoutes.js';
 import tvRoutes from './routes/tvRoutes.js';
+import searchRoutes from './routes/searchRoutes.js';
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/movie', protectRoute, movieRoutes);
 app.use('/api/v1/tv', protectRoute, tvRoutes);
+app.use('/api/v1/search', protectRoute, searchRoutes);
 
 // app running on port
 app.listen(port, () => {
