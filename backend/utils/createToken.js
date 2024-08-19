@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { ENV_VARS } from '../configs/envVars.js';
+import ENV_VARS from '../configs/envVars.js';
 
 const generateJWT = (userId, res) => {
     const token = jwt.sign({ userId }, ENV_VARS.JWT_SECRET, {

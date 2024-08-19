@@ -4,7 +4,7 @@ import express from 'express';
 const app = express();
 
 // .env variables
-import { ENV_VARS } from './configs/envVars.js';
+import ENV_VARS from './configs/envVars.js';
 
 const port = ENV_VARS.PORT;
 
