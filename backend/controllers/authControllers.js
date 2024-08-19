@@ -1,4 +1,4 @@
-import User from '../models/usersModals.js';
+import User from '../models/authModals.js';
 import bcryptjs from 'bcryptjs';
 import generateJWT from '../utils/createToken.js';
 

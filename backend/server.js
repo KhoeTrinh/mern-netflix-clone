@@ -14,12 +14,14 @@ import connectDB from './configs/db.js';
 connectDB();
 
 // middleware
-app.use(express.json())
+app.use(express.json());
 
 // routes
 import authRoutes from './routes/authRoutes.js';
+import movieRoutes from './routes/movieRoutes.js'
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/movie', movieRoutes);
 
 // app running on port
 app.listen(port, () => {
