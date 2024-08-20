@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useAuthStore from '../store/authUser';
 
 const SignupPage = () => {
+    const { searchParams } = new URL(document.location);
+    const emailValue = searchParams.get('email');
+
     const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState(emailValue || '');
     const [password, setPassword] = useState('');
+
+    const { signup } = useAuthStore();
 
     const handleSignUp = (e) => {
         e.preventDefault();
-        console.log(username, email, password);
+        signup({ username, email, password})
     };
     return (
         <div className='h-screen w-full hero-bg'>
@@ -33,6 +39,21 @@ const SignupPage = () => {
                     >
                         <div>
                             <label
+                                htmlFor='email'
+                                className='text-sm font-medium text-gray-300 block'
+                            >
+                                Email
+                            </label>
+                            <input
+                                type='email'
+                                className='w-full px-3 py-2 mt-1 border border-gray-700 rounded-md bg-transparent text-white focus:outline-none focus:ring'
+                                id='email'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <label
                                 htmlFor='username'
                                 className='text-sm font-medium text-gray-300 block'
                             >
@@ -46,21 +67,6 @@ const SignupPage = () => {
                                 onChange={(e) =>
                                     setUsername(e.target.value)
                                 }
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor='email'
-                                className='text-sm font-medium text-gray-300 block'
-                            >
-                                Email
-                            </label>
-                            <input
-                                type='email'
-                                className='w-full px-3 py-2 mt-1 border border-gray-700 rounded-md bg-transparent text-white focus:outline-none focus:ring'
-                                id='email'
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                         <div>

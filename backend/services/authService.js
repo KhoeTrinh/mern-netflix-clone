@@ -142,4 +142,21 @@ const authLogoutService = async (res) => {
     }
 };
 
-export { authSigupService, authSigninService, authLogoutService };
+const authCheckService = async (req, res) => {
+    try {
+        res.json({ success: true, user: req.user });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+        });
+    }
+};
+
+export {
+    authSigupService,
+    authSigninService,
+    authLogoutService,
+    authCheckService,
+};

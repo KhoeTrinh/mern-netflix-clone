@@ -2,6 +2,7 @@ import {
     authSigupService,
     authSigninService,
     authLogoutService,
+    authCheckService,
 } from '../services/authService.js';
 
 const signup = async (req, res) => {
@@ -18,4 +19,8 @@ const logout = async (req, res) => {
     authLogoutService(res);
 };
 
-export { signup, login, logout };
+const authCheck = (req, res) => {
+    authCheckService(req, res)
+}
+
+export { signup, login, logout, authCheck };
