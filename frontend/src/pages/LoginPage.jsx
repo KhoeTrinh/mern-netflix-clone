@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useAuthStore from '../store/authUser';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSignUp = (e) => {
+    const {login} = useAuthStore()
+
+    const handleSignIn = (e) => {
         e.preventDefault();
-        console.log(email, password);
+        login({ email, password})
     };
 
     return (
@@ -29,7 +32,7 @@ const LoginPage = () => {
                     </h1>
                     <form
                         className='space-y-4'
-                        onSubmit={handleSignUp}
+                        onSubmit={handleSignIn}
                     >
                         <div>
                             <label
