@@ -1,54 +1,17 @@
-import fetchFromTMDB from '../services/tmdb.js';
+import { movieTrendingService, movieDetailsService, movieTrailersService } from '../services/movieService.js';
 
 const getTrendingMovie = async (req, res) => {
-    try {
-        const data = await fetchFromTMDB(
-            'https://api.themoviedb.org/3/trending/movie/day?language=en-US'
-        );
-        const randomMovie =
-            data.results[Math.floor(Math.random() * data.results?.length)];
-
-        res.json({ success: true, content: randomMovie });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, message: 'Server error' });
-    }
+    movieTrendingService(res)
 };
 
 const getMovieTrailers = async (req, res) => {
     const { id } = req.params;
-    try {
-        const data = await fetchFromTMDB(
-            `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`
-        );
-        res.json({ success: true, trailers: data.results });
-    } catch (err) {
-        if (err.message.includes('404')) {
-            return res
-                .status(404)
-                .json({ success: false, message: 'Movie not found' });
-        }
-        console.error(err);
-        res.status(500).json({ success: false, message: 'Server error' });
-    }
+    movieTrailersService(id, res)
 };
 
 const getMovieDetails = async (req, res) => {
     const { id } = req.params;
-    try {
-        const data = await fetchFromTMDB(
-            `https://api.themoviedb.org/3/movie/${id}?language=en-US`
-        );
-        res.json({ success: true, content: data });
-    } catch (err) {
-        if (err.message.includes('404')) {
-            return res
-                .status(404)
-                .json({ success: false, message: 'Movie not found' });
-        }
-        console.error(err);
-        res.status(500).json({ success: false, message: 'Server error' });
-    }
+    movieDetailsService(id, res);
 };
 
 const getSimilarMovies = async (req, res) => {
