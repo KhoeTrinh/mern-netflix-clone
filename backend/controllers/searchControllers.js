@@ -8,17 +8,17 @@ import {
 
 const searchPerson = async (req, res) => {
     const { query } = req.params;
-    searchPersonService(query, res);
+    searchPersonService(query, req, res);
 };
 
 const searchMovie = async (req, res) => {
     const { query } = req.params;
-    searchMovieService(query, res);
+    searchMovieService(query, req, res);
 };
 
 const searchTv = async (req, res) => {
     const { query } = req.params;
-    searchTvService(query, res);
+    searchTvService(query, req, res);
 };
 
 const getSearchHistory = async (req, res) => {

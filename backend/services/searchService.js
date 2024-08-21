@@ -1,7 +1,7 @@
 import User from '../models/authModals.js';
 import fetchFromTMDB from '../services/tmdb.js';
 
-const searchPersonService = async (query, res) => {
+const searchPersonService = async (query, req, res) => {
     try {
         const response = await fetchFromTMDB(
             `https://api.themoviedb.org/3/search/person?query=${query}&include_adult=false&language=en-US&page=1`
@@ -31,7 +31,7 @@ const searchPersonService = async (query, res) => {
     }
 };
 
-const searchMovieService = async (query, res) => {
+const searchMovieService = async (query, req, res) => {
     try {
         const response = await fetchFromTMDB(
             `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`
@@ -62,7 +62,7 @@ const searchMovieService = async (query, res) => {
     }
 };
 
-const searchTvService = async (query, res) => {
+const searchTvService = async (query, req, res) => {
     try {
         const response = await fetchFromTMDB(
             `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=false&language=en-US&page=1`

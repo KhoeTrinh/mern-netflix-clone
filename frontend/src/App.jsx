@@ -11,6 +11,7 @@ import HomePage from "./pages/home/HomePage"
 import LoginPage from "./pages/LoginPage"
 import SignupPage from "./pages/SignupPage"
 import WatchPage from "./pages/WatchPage"
+import SearchPage from "./pages/SearchPage"
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/login" element={!user ? <LoginPage /> : <Navigate to={'/'}/>}/>
         <Route path="/signup" element={!user ? <SignupPage /> : <Navigate to={'/'}/>}/>
         <Route path="/watch/:id" element={user ? <WatchPage /> : <Navigate to={'/login'}/>}/>
+        <Route path="/search" element={user ? <SearchPage /> : <Navigate to={'/login'}/>}/>
       </Routes>
       <Footer />
       <Toaster />
