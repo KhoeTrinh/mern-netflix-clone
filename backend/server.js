@@ -3,6 +3,11 @@ import express from 'express';
 
 const app = express();
 
+// get file path
+import path from 'path'
+
+const __dirname = path.resolve()
+
 // .env variables
 import ENV_VARS from './configs/envVars.js';
 
@@ -30,6 +35,16 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/movie', protectRoute, movieRoutes);
 app.use('/api/v1/tv', protectRoute, tvRoutes);
 app.use('/api/v1/search', protectRoute, searchRoutes);
+
+// deploy app
+
+if(ENV_VARS.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '/frontend/dist')))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'))
+    })
+}
 
 // app running on port
 app.listen(port, () => {

@@ -13,6 +13,7 @@ import SignupPage from "./pages/SignupPage"
 import WatchPage from "./pages/WatchPage"
 import SearchPage from "./pages/SearchPage"
 import HistoryPage from "./pages/HistoryPage"
+import Page404 from "./pages/Page404"
 
 
 function App() {
@@ -41,6 +42,8 @@ function App() {
         <Route path="/watch/:id" element={user ? <WatchPage /> : <Navigate to={'/login'}/>}/>
         <Route path="/search" element={user ? <SearchPage /> : <Navigate to={'/login'}/>}/>
         <Route path="/history" element={user ? <HistoryPage /> : <Navigate to={'/login'}/>}/>
+
+        <Route path="/*" element={<Page404 />}/>
       </Routes>
       <Footer />
       <Toaster />
