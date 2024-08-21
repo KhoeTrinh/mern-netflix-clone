@@ -14,13 +14,13 @@ import WatchPage from "./pages/WatchPage"
 
 
 function App() {
-  const { user, isCheckAuth, authCheck } = useAuthStore()
+  const { user, isCheckingAuth, authCheck } = useAuthStore()
 
   useEffect(() => {
     authCheck()
   }, [authCheck])
 
-  if(isCheckAuth) {
+  if(isCheckingAuth) {
     return (
       <div className="h-screen">
         <div className="flex justify-center items-center bg-black h-full">
