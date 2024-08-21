@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
 import { Loader } from "lucide-react"
@@ -9,7 +10,7 @@ import useAuthStore from "./store/authUser"
 import HomePage from "./pages/home/HomePage"
 import LoginPage from "./pages/LoginPage"
 import SignupPage from "./pages/SignupPage"
-import { useEffect } from "react"
+import WatchPage from "./pages/WatchPage"
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/" element={<HomePage />}/>
         <Route path="/login" element={!user ? <LoginPage /> : <Navigate to={'/'}/>}/>
         <Route path="/signup" element={!user ? <SignupPage /> : <Navigate to={'/'}/>}/>
+        <Route path="/watch/:id" element={user ? <WatchPage /> : <Navigate to={'/login'}/>}/>
       </Routes>
       <Footer />
       <Toaster />
