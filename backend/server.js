@@ -18,6 +18,23 @@ import connectDB from './configs/db.js';
 
 connectDB();
 
+// connect firebase
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyANjbUBGnrYZQEQEtvLGzn85ycwGnQdGtE",
+  authDomain: "netflix-clone-7ab9b.firebaseapp.com",
+  projectId: "netflix-clone-7ab9b",
+  storageBucket: "netflix-clone-7ab9b.appspot.com",
+  messagingSenderId: "100144354771",
+  appId: "1:100144354771:web:fcf9864c87e22dfe0ecb26",
+  measurementId: "G-DCWE1XRZL9"
+};
+
+const apps = initializeApp(firebaseConfig);
+const analytics = getAnalytics(apps);
+
 // middleware
 import cookieParser from 'cookie-parser';
 import protectRoute from './middlewares/protectRoute.js';
@@ -37,7 +54,6 @@ app.use('/api/v1/tv', protectRoute, tvRoutes);
 app.use('/api/v1/search', protectRoute, searchRoutes);
 
 // deploy app
-
 if(ENV_VARS.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '/frontend/dist')))
 
