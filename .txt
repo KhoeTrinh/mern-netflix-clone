@@ -1,0 +1,6 @@
+- thue server (linux - ubuntu 20.04)
+- remote vao server bang ssh
+- xai linux server
+- clone & build & run source code tren server
+- co the truy cap tu internet thong qua ip
+- mua domain va tro vao server -> su dung nginx
