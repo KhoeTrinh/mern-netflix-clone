@@ -46,9 +46,12 @@ const useAuthStore = create((set) => ({
     },
     authCheck: async () => {
         set({ isCheckingAuth: true });
+        const hadAuthCheck = localStorage.getItem('authCheck') || ''
         try {
-            const response = await axios.get('/api/v1/auth/authCheck');
+            const response = await axios.get('/api/v1/auth/authCheck', hadAuthCheck);
             set({ user: response.data.user, isCheckingAuth: false });
+            const token = response.data.token
+            localStorage.setItem('authCheck', token);
         } catch {
             set({ isCheckingAuth: false, user: null });
         }

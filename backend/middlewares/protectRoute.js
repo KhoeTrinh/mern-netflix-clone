@@ -4,7 +4,7 @@ import ENV_VARS from '../configs/envVars.js';
 
 const protectRoute = async (req, res, next) => {
     try {
-        const token = localStorage.getItem('token');
+        const token = req.token
 
         if (!token) {
             return res.status(401).json({

@@ -2,44 +2,59 @@ import User from '../models/authModals.js';
 import bcryptjs from 'bcryptjs';
 import generateJWT from '../utils/createToken.js';
 
-const authSigupService = async (username, email, password, res) => {
+const authSigupService = async (username, email, password) => {
     try {
         if (!username || !email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: 'All fields are required',
-            });
+            return {
+                status: 400,
+                json: {
+                    success: false,
+                    message: 'All fields are required',
+                },
+            };
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid email format',
-            });
+            return {
+                status: 400,
+                json: {
+                    success: false,
+                    message: 'Invalid email format',
+                },
+            };
         }
 
         if (password.length < 6) {
-            return res.status(400).json({
-                success: false,
-                message: 'Password must be at least 6 characters long',
-            });
+            return {
+                status: 400,
+                json: {
+                    success: false,
+                    message: 'Password must be at least 6 characters long',
+                },
+            };
         }
         const existingUserName = await User.findOne({ username });
 
         if (existingUserName) {
-            return res.status(400).json({
-                success: false,
-                message: 'Username already exists',
-            });
+            return {
+                status: 400,
+                json: {
+                    success: false,
+                    message: 'Username already exists',
+                },
+            };
         }
         const existingUserEmail = await User.findOne({ email });
 
         if (existingUserEmail) {
-            return res.status(400).json({
-                success: false,
-                message: 'Email already exists',
-            });
+            return {
+                status: 400,
+                json: {
+                    success: false,
+                    message: 'Email already exists',
+                },
+            };
         }
         const salt = await bcryptjs.genSalt(10);
         const hashedPass = await bcryptjs.hash(password, salt);
@@ -59,41 +74,54 @@ const authSigupService = async (username, email, password, res) => {
             password: hashedPass,
             image,
         });
-        generateJWT(newUser._id, res);
+        const token = generateJWT(newUser._id);
         await newUser.save();
 
-        res.status(201).json({
-            success: true,
-            message: 'User created successfully',
-            user: {
-                ...newUser._doc,
-                password: null,
+        return {
+            status: 201,
+            json: {
+                success: true,
+                message: 'User created successfully',
+                user: {
+                    ...newUser._doc,
+                    password: null,
+                },
+                token: token,
             },
-        });
+        };
     } catch (err) {
         console.error(err);
-        res.status(500).json({
-            success: false,
-            message: 'Server error',
-        });
+        return {
+            status: 500,
+            json: {
+                success: false,
+                message: 'Server error',
+            },
+        };
     }
 };
 
-const authSigninService = async (email, password, res) => {
+const authSigninService = async (email, password) => {
     try {
         if (!email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: 'All fields are required',
-            });
+            return {
+                status: 400,
+                json: {
+                    success: false,
+                    message: 'All fields are required',
+                },
+            };
         }
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: 'User not found',
-            });
+            return {
+                status: 401,
+                json: {
+                    success: false,
+                    message: 'User not found',
+                },
+            };
         }
         const validPassword = await bcryptjs.compare(
             password,
@@ -101,56 +129,73 @@ const authSigninService = async (email, password, res) => {
         );
 
         if (!validPassword) {
-            return res.status(401).json({
-                success: false,
-                message: 'Invalid password',
-            });
+            return {
+                status: 401,
+                json: {
+                    success: false,
+                    message: 'Invalid password',
+                },
+            };
         }
 
-        generateJWT(user._id, res);
+        generateJWT(user._id);
 
-        res.json({
-            success: true,
-            message: 'Logged in successfully',
-            user: {
-                ...user._doc,
-                password: null,
+        return {
+            status: 200,
+            json: {
+                success: true,
+                message: 'Logged in successfully',
+                user: {
+                    ...user._doc,
+                    password: null,
+                },
             },
-        });
+        };
     } catch (err) {
         console.error(err);
-        res.status(500).json({
-            success: false,
-            message: 'Server error',
-        });
+        return {
+            status: 500,
+            json: {
+                success: false,
+                message: 'Server error',
+            },
+        };
     }
 };
 
-const authLogoutService = async (res) => {
+const authLogoutService = async () => {
     try {
-        res.clearCookie('jwt-netflix');
-        res.status(200).json({
-            success: true,
-            message: 'Logged out successfully',
-        });
+        return {
+            status: 200,
+            json: {
+                success: true,
+                message: 'Logged out successfully',
+            },
+        };
     } catch (err) {
         console.error(err);
-        res.status(500).json({
-            success: false,
-            message: 'Server error',
-        });
+        return {
+            status: 500,
+            json: {
+                success: false,
+                message: 'Server error',
+            },
+        };
     }
 };
 
-const authCheckService = async (req, res) => {
+const authCheckService = async (req) => {
     try {
-        res.json({ success: true, user: req.user });
+        return { status: 200, json: { success: true, user: req.user } };
     } catch (err) {
         console.error(err);
-        res.status(500).json({
-            success: false,
-            message: 'Server error',
-        });
+        return {
+            status: 500,
+            json: {
+                success: false,
+                message: 'Server error',
+            },
+        };
     }
 };
 

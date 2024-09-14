@@ -7,20 +7,25 @@ import {
 
 const signup = async (req, res) => {
     const { username, email, password } = req.body;
-    authSigupService(username, email, password, res);
+    const resData = await authSigupService(username, email, password);
+    console.log(resData);
+    res.status(resData.status).json(resData.json);
 };
 
 const login = async (req, res) => {
     const { email, password } = req.body;
-    authSigninService(email, password, res);
+    const resData = await authSigninService(email, password);
+    res.status(resData.status).json(resData.json);
 };
 
-const logout = async (req, res) => {
-    authLogoutService(res);
+const logout = async (res) => {
+    const resData = await authLogoutService(res);
+    res.status(resData.status).json(resData.json);
 };
 
-const authCheck = (req, res) => {
-    authCheckService(req, res)
-}
+const authCheck = async (req, res) => {
+    const resData = await authCheckService(req);
+    res.status(resData.status).json(resData.json);
+};
 
 export { signup, login, logout, authCheck };
