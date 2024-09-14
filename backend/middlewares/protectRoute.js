@@ -4,7 +4,7 @@ import ENV_VARS from '../configs/envVars.js';
 
 const protectRoute = async (req, res, next) => {
     try {
-        const token = req.cookies['jwt-netflix'];
+        const token = localStorage.getItem('token');
 
         if (!token) {
             return res.status(401).json({
