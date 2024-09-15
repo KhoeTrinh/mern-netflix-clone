@@ -1,7 +1,7 @@
 {
     "name": "mern-netflix-clone",
     "version": "1.0.0",
-    "main": "backend/server.js",
+    "main": "",
     "type": "module",
     "scripts": {
         "backend": "npm run dev --prefix backend",

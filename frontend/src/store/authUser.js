@@ -16,6 +16,8 @@ const useAuthStore = create((set) => ({
                 credentials
             );
             set({ user: response.data.user, isSigningUp: false });
+            const token = response.data.token;
+            localStorage.setItem('authCheck', token);
             toast.success('Account created successfully');
         } catch (err) {
             toast.error(err.response.data.message || 'An error occurred');
@@ -23,14 +25,19 @@ const useAuthStore = create((set) => ({
         }
     },
     login: async (credentials) => {
-        set({ isSigningUp: true })
+        set({ isSigningUp: true });
         try {
-            const response = await axios.post('/api/v1/auth/login', credentials)
-            set({ user: response.data.user, isLoggingIn: false})
-            toast.success('User logged in successfully')
+            const response = await axios.post(
+                '/api/v1/auth/login',
+                credentials
+            );
+            set({ user: response.data.user, isLoggingIn: false });
+            const token = response.data.token;
+            localStorage.setItem('authCheck', token);
+            toast.success('User logged in successfully');
         } catch (err) {
-            set({ isLoggingIn: false, user: null })
-            toast.error(err.response.data.message || 'Login failed')
+            set({ isLoggingIn: false, user: null });
+            toast.error(err.response.data.message || 'Login failed');
         }
     },
     logout: async () => {
@@ -38,20 +45,23 @@ const useAuthStore = create((set) => ({
         try {
             await axios.post('/api/v1/auth/logout');
             set({ user: null, isLoggingOut: false });
+            localStorage.clear('authCheck')
             toast.success('Logged out successfully');
         } catch (err) {
             set({ isLoggingOut: false });
-            toast.error(err.response.data.message || 'Logout failed')
+            toast.error(err.response.data.message || 'Logout failed');
         }
     },
     authCheck: async () => {
         set({ isCheckingAuth: true });
-        const hadAuthCheck = localStorage.getItem('authCheck') || ''
+        const hadAuthCheck = localStorage.getItem('authCheck');
         try {
-            const response = await axios.get('/api/v1/auth/authCheck', hadAuthCheck);
+            const response = await axios.get('/api/v1/auth/authCheck', {
+                headers: {
+                    Authorization: `Bearer ${hadAuthCheck}`,
+                },
+            });
             set({ user: response.data.user, isCheckingAuth: false });
-            const token = response.data.token
-            localStorage.setItem('authCheck', token);
         } catch {
             set({ isCheckingAuth: false, user: null });
         }

@@ -1,6 +1,5 @@
 const fetchToken = (req, res, next) => {
-    // const { token } = req.body;
-    console.log(req);
+    const token = req.headers.authorization?.split(' ')[1];
     req.token = token;
     next();
 };

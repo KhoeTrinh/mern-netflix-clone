@@ -25,8 +25,13 @@ const WatchPage = () => {
     useEffect(() => {
         const getTrailers = async () => {
             try {
+                const hadAuthCheck = localStorage.getItem('authCheck');
                 const res = await axios.get(
-                    `/api/v1/${contentType}/${id}/trailers`
+                    `/api/v1/${contentType}/${id}/trailers`, {
+                        headers: {
+                            Authorization: `Bearer ${hadAuthCheck}`,
+                        },
+                    }
                 );
                 setTrailers(res.data.trailers);
             } catch (err) {
@@ -42,8 +47,13 @@ const WatchPage = () => {
     useEffect(() => {
         const getSimilarContent = async () => {
             try {
+                const hadAuthCheck = localStorage.getItem('authCheck');
                 const res = await axios.get(
-                    `/api/v1/${contentType}/${id}/similar`
+                    `/api/v1/${contentType}/${id}/similar`, {
+                        headers: {
+                            Authorization: `Bearer ${hadAuthCheck}`,
+                        },
+                    }
                 );
                 setSimilarContent(res.data.similar);
             } catch (err) {
@@ -59,8 +69,13 @@ const WatchPage = () => {
     useEffect(() => {
         const getContentDetails = async () => {
             try {
+                const hadAuthCheck = localStorage.getItem('authCheck');
                 const res = await axios.get(
-                    `/api/v1/${contentType}/${id}/details`
+                    `/api/v1/${contentType}/${id}/details`, {
+                        headers: {
+                            Authorization: `Bearer ${hadAuthCheck}`,
+                        },
+                    }
                 );
                 setContent(res.data.content);
             } catch (err) {
@@ -97,7 +112,7 @@ const WatchPage = () => {
             left: sliderRef.current.offsetWidth,
             behavior: 'smooth',
         });
-    };  
+    };
 
     if (loading)
         return (
@@ -106,16 +121,19 @@ const WatchPage = () => {
             </div>
         );
 
-    if(!content) return (
-        <div className="bg-black text-white h-screen">
-            <div className="max-w-6xl mx-auto">
-                <Navbar/>
-                <div className="text-center mx-auto px-4 py-8 h-full mt-40">
-                    <h2 className="text-2xl sm:text-5xl font-bold text-balance">Content not found 😰</h2>
+    if (!content)
+        return (
+            <div className='bg-black text-white h-screen'>
+                <div className='max-w-6xl mx-auto'>
+                    <Navbar />
+                    <div className='text-center mx-auto px-4 py-8 h-full mt-40'>
+                        <h2 className='text-2xl sm:text-5xl font-bold text-balance'>
+                            Content not found 😰
+                        </h2>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        );
     return (
         <div className='bg-black min-h-screen text-white'>
             <div className='mx-auto container ppx-4 py-8 h-full'>

@@ -24,18 +24,23 @@ const HistoryPage = () => {
             'Nov',
             'Dec',
         ];
-    
+
         const month = monthNames[date.getUTCMonth()];
         const day = date.getUTCDate();
         const year = date.getUTCFullYear();
-    
+
         return `${month} ${day}, ${year}`;
-    };    
+    };
 
     useEffect(() => {
         const getSearchHis = async () => {
             try {
-                const res = await axios.get(`/api/v1/search/history`);
+                const hadAuthCheck = localStorage.getItem('authCheck');
+                const res = await axios.get(`/api/v1/search/history`, {
+                    headers: {
+                        Authorization: `Bearer ${hadAuthCheck}`,
+                    },
+                });
                 setSearchHistory(res.data.content);
             } catch (err) {
                 console.log(err.message);
@@ -47,7 +52,12 @@ const HistoryPage = () => {
 
     const handleDelete = async (entry) => {
         try {
-            await axios.delete(`/api/v1/search/history/${entry.id}`);
+            const hadAuthCheck = localStorage.getItem('authCheck');
+            await axios.delete(`/api/v1/search/history/${entry.id}`, {
+                headers: {
+                    Authorization: `Bearer ${hadAuthCheck}`,
+                },
+            });
             setSearchHistory(
                 searchHistory.filter((item) => item.id !== entry.id)
             );
@@ -55,7 +65,7 @@ const HistoryPage = () => {
             toast.error('Failed to delete search history');
         }
     };
-    
+
     if (searchHistory?.length === 0) {
         return (
             <div className='bg-black min-h-screen text-white'>

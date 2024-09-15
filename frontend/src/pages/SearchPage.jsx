@@ -23,8 +23,14 @@ const SearchPage = () => {
     const handleSearch = async (e) => {
         e.preventDefault();
         try {
+            const hadAuthCheck = localStorage.getItem('authCheck');
             const res = await axios.get(
-                `/api/v1/search/${activeTab}/${searchItem}`
+                `/api/v1/search/${activeTab}/${searchItem}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${hadAuthCheck}`,
+                    },
+                }
             );
             setResults(res.data.content);
         } catch (err) {

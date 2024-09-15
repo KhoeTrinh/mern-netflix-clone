@@ -7,8 +7,16 @@ const useGetTrendingContent = () => {
     const { contentType } = useContentStore();
 
     useEffect(() => {
+        const hadAuthCheck = localStorage.getItem('authCheck');
         const getTrendingContent = async () => {
-            const res = await axios.get(`/api/v1/${contentType}/trending`);
+            const res = await axios.get(
+                `/api/v1/${contentType}/trending`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${hadAuthCheck}`,
+                    },
+                }
+            );
             setTrendingContent(res.data.content);
         };
         getTrendingContent();

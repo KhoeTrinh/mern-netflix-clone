@@ -19,9 +19,15 @@ const MovieSlider = ({ category }) => {
         contentType === 'movie' ? 'Movie' : 'TV Shows';
 
     useEffect(() => {
+        const hadAuthCheck = localStorage.getItem('authCheck')
         const getContent = async () => {
             const res = await axios.get(
-                `/api/v1/${contentType}/${category}`
+                `/api/v1/${contentType}/${category}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${hadAuthCheck}`,
+                    },
+                }
             );
             setContent(res.data.content);
         };

@@ -138,7 +138,7 @@ const authSigninService = async (email, password) => {
             };
         }
 
-        generateJWT(user._id);
+        const token = generateJWT(user._id);
 
         return {
             status: 200,
@@ -149,6 +149,7 @@ const authSigninService = async (email, password) => {
                     ...user._doc,
                     password: null,
                 },
+                token: token,
             },
         };
     } catch (err) {

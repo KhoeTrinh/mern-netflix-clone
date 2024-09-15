@@ -8,7 +8,6 @@ import {
 const signup = async (req, res) => {
     const { username, email, password } = req.body;
     const resData = await authSigupService(username, email, password);
-    console.log(resData);
     res.status(resData.status).json(resData.json);
 };
 
@@ -18,8 +17,8 @@ const login = async (req, res) => {
     res.status(resData.status).json(resData.json);
 };
 
-const logout = async (res) => {
-    const resData = await authLogoutService(res);
+const logout = async (req, res) => {
+    const resData = await authLogoutService();
     res.status(resData.status).json(resData.json);
 };
 
