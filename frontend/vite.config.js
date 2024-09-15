@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://mern-netflix-clone-backend.pages.dev",
+        target: "https://mern-netflix-clone-backend.pages.dev:5000",
       }
     }
   }
