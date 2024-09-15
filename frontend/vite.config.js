@@ -7,7 +7,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'https://mern-netflix-clone-q3cw.vercel.app/',
+                target: 'https://mern-netflix-clone-2.onrender.com',
                 changeOrigin: true,
                 secure: true,
             },
