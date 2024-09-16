@@ -11,13 +11,7 @@ const port = ENV_VARS.PORT;
 // cors middleware
 import cors from 'cors';
 
-app.use(
-    cors({
-        origin: 'https://mern-netflix-clone-frontend.pages.dev',
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        credentials: true,
-    })
-);
+app.use(cors());
 
 // connect DB
 import connectDB from './configs/db.js';
