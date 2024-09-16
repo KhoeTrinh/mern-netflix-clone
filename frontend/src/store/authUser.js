@@ -12,8 +12,7 @@ const useAuthStore = create((set) => ({
         set({ isSigningUp: true });
         try {
             const response = await axios.post(
-                'https://mern-netflix-2.onrender.com/api/v1/auth/signup',
-                { changeOrigin: true, secure: true },
+                '/api/v1/auth/signup',
                 credentials
             );
             set({ user: response.data.user, isSigningUp: false });
@@ -46,7 +45,7 @@ const useAuthStore = create((set) => ({
         try {
             await axios.post('/api/v1/auth/logout');
             set({ user: null, isLoggingOut: false });
-            localStorage.clear('authCheck');
+            localStorage.clear('authCheck')
             toast.success('Logged out successfully');
         } catch (err) {
             set({ isLoggingOut: false });
