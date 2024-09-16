@@ -22,7 +22,7 @@ const MovieSlider = ({ category }) => {
         const hadAuthCheck = localStorage.getItem('authCheck')
         const getContent = async () => {
             const res = await axios.get(
-                `/api/v1/${contentType}/${category}`,
+                `https://mern-netflix-clone-2.onrender.com/api/v1/${contentType}/${category}`,
                 {
                     headers: {
                         Authorization: `Bearer ${hadAuthCheck}`,

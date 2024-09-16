@@ -12,7 +12,7 @@ const useAuthStore = create((set) => ({
         set({ isSigningUp: true });
         try {
             const response = await axios.post(
-                '/api/v1/auth/signup',
+                'https://mern-netflix-clone-2.onrender.com/api/v1/auth/signup',
                 credentials
             );
             set({ user: response.data.user, isSigningUp: false });
@@ -28,7 +28,7 @@ const useAuthStore = create((set) => ({
         set({ isSigningUp: true });
         try {
             const response = await axios.post(
-                '/api/v1/auth/login',
+                'https://mern-netflix-clone-2.onrender.com/api/v1/auth/login',
                 credentials
             );
             set({ user: response.data.user, isLoggingIn: false });
@@ -43,9 +43,11 @@ const useAuthStore = create((set) => ({
     logout: async () => {
         set({ isLoggingOut: true });
         try {
-            await axios.post('/api/v1/auth/logout');
+            await axios.post(
+                'https://mern-netflix-clone-2.onrender.com/api/v1/auth/logout'
+            );
             set({ user: null, isLoggingOut: false });
-            localStorage.clear('authCheck')
+            localStorage.clear('authCheck');
             toast.success('Logged out successfully');
         } catch (err) {
             set({ isLoggingOut: false });
@@ -56,11 +58,14 @@ const useAuthStore = create((set) => ({
         set({ isCheckingAuth: true });
         const hadAuthCheck = localStorage.getItem('authCheck');
         try {
-            const response = await axios.get('/api/v1/auth/authCheck', {
-                headers: {
-                    Authorization: `Bearer ${hadAuthCheck}`,
-                },
-            });
+            const response = await axios.get(
+                'https://mern-netflix-clone-2.onrender.com/api/v1/auth/authCheck',
+                {
+                    headers: {
+                        Authorization: `Bearer ${hadAuthCheck}`,
+                    },
+                }
+            );
             set({ user: response.data.user, isCheckingAuth: false });
         } catch {
             set({ isCheckingAuth: false, user: null });

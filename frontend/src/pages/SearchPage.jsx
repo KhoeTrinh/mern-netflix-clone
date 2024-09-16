@@ -25,7 +25,7 @@ const SearchPage = () => {
         try {
             const hadAuthCheck = localStorage.getItem('authCheck');
             const res = await axios.get(
-                `/api/v1/search/${activeTab}/${searchItem}`,
+                `https://mern-netflix-clone-2.onrender.com/api/v1/search/${activeTab}/${searchItem}`,
                 {
                     headers: {
                         Authorization: `Bearer ${hadAuthCheck}`,

@@ -27,7 +27,7 @@ const WatchPage = () => {
             try {
                 const hadAuthCheck = localStorage.getItem('authCheck');
                 const res = await axios.get(
-                    `/api/v1/${contentType}/${id}/trailers`, {
+                    `https://mern-netflix-clone-2.onrender.com/api/v1/${contentType}/${id}/trailers`, {
                         headers: {
                             Authorization: `Bearer ${hadAuthCheck}`,
                         },
@@ -49,7 +49,7 @@ const WatchPage = () => {
             try {
                 const hadAuthCheck = localStorage.getItem('authCheck');
                 const res = await axios.get(
-                    `/api/v1/${contentType}/${id}/similar`, {
+                    `https://mern-netflix-clone-2.onrender.com/api/v1/${contentType}/${id}/similar`, {
                         headers: {
                             Authorization: `Bearer ${hadAuthCheck}`,
                         },
@@ -71,7 +71,7 @@ const WatchPage = () => {
             try {
                 const hadAuthCheck = localStorage.getItem('authCheck');
                 const res = await axios.get(
-                    `/api/v1/${contentType}/${id}/details`, {
+                    `https://mern-netflix-clone-2.onrender.com/api/v1/${contentType}/${id}/details`, {
                         headers: {
                             Authorization: `Bearer ${hadAuthCheck}`,
                         },

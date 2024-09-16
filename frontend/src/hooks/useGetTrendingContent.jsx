@@ -10,7 +10,7 @@ const useGetTrendingContent = () => {
         const hadAuthCheck = localStorage.getItem('authCheck');
         const getTrendingContent = async () => {
             const res = await axios.get(
-                `/api/v1/${contentType}/trending`,
+                `https://mern-netflix-clone-2.onrender.com/api/v1/${contentType}/trending`,
                 {
                     headers: {
                         Authorization: `Bearer ${hadAuthCheck}`,

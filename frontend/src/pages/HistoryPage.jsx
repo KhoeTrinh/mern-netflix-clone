@@ -36,7 +36,7 @@ const HistoryPage = () => {
         const getSearchHis = async () => {
             try {
                 const hadAuthCheck = localStorage.getItem('authCheck');
-                const res = await axios.get(`/api/v1/search/history`, {
+                const res = await axios.get(`https://mern-netflix-clone-2.onrender.com/api/v1/search/history`, {
                     headers: {
                         Authorization: `Bearer ${hadAuthCheck}`,
                     },
@@ -53,7 +53,7 @@ const HistoryPage = () => {
     const handleDelete = async (entry) => {
         try {
             const hadAuthCheck = localStorage.getItem('authCheck');
-            await axios.delete(`/api/v1/search/history/${entry.id}`, {
+            await axios.delete(`https://mern-netflix-clone-2.onrender.com/api/v1/search/history/${entry.id}`, {
                 headers: {
                     Authorization: `Bearer ${hadAuthCheck}`,
                 },
