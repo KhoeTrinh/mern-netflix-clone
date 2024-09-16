@@ -7,9 +7,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'https://mern-netflix-clone-2.onrender.com/',
-                changeOrigin: true,
-                secure: true,
+                target: 'http://localhost:5000',
             },
         },
     },
