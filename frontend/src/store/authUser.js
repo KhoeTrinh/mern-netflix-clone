@@ -12,7 +12,7 @@ const useAuthStore = create((set) => ({
         set({ isSigningUp: true });
         try {
             const response = await axios.post(
-                '/api/v1/auth/signup',
+                'https://mern-netflix-2.onrender.com/api/v1/auth/signup',
                 credentials
             );
             set({ user: response.data.user, isSigningUp: false });
